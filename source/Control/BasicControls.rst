@@ -335,51 +335,51 @@ endpoint is (40,60). The result is given in
 
 
 
-using PyCall
-    np = pyimport("numpy")
+    using PyCall
+        np = pyimport("numpy")
 
-    r = 20.0
-    l = 12.0
-    dt  = 0.01
-    Tend = 6.0
-    N = Int64(Tend/dt)
+        r = 20.0
+        l = 12.0
+        dt  = 0.01
+        Tend = 6.0
+        N = Int64(Tend/dt)
 
 
-    xend = 40
-    yend = 60
-    v = 1.0
-    k1 = 2.0
-    k2 = 0.2
+        xend = 40
+        yend = 60
+        v = 1.0
+        k1 = 2.0
+        k2 = 0.2
 
-    x = np.zeros(N)
-    y = np.zeros(N)
-    th = np.zeros(N)
+        x = np.zeros(N)
+        y = np.zeros(N)
+        th = np.zeros(N)
 
-    i = 1
-    while(i<N)
-        th_err = atan(yend - y[i], xend - x[i]) - th[i]
-        d1 = abs(x[i] - xend)
-        d2 = abs(y[i] - yend)
-        w = v
-        d = sqrt(d1*d1+d2*d2)
-        if (d<0.5)
-            break
+        i = 1
+        while(i<N)
+            th_err = atan(yend - y[i], xend - x[i]) - th[i]
+            d1 = abs(x[i] - xend)
+            d2 = abs(y[i] - yend)
+            w = v
+            d = sqrt(d1*d1+d2*d2)
+            if (d<0.5)
+                break
+            end
+            if (d > 100):  break
+            end
+            w1 = w + k1*th_err
+            w2 = w - k1*th_err
+            if (d<5)
+                w1, w2 = k2*d*(w + k1*th_err), k2*d*(w - k1*th_err)
+            dx = (r*dt/2.0)*(w1+w2)*cos(th[i])
+            dy = (r*dt/2.0)*(w1+w2)*sin(th[i])
+            dth = (r*dt/(2.0*l))*(w1-w2)
+            x[i+1] = x[i] + dx
+            y[i+1] = y[i] + dy
+            th[i+1] = th[i] + dth
+            i = i+1
+            end
         end
-        if (d > 100):  break
-        end
-        w1 = w + k1*th_err
-        w2 = w - k1*th_err
-        if (d<5)
-            w1, w2 = k2*d*(w + k1*th_err), k2*d*(w - k1*th_err)
-        dx = (r*dt/2.0)*(w1+w2)*cos(th[i])
-        dy = (r*dt/2.0)*(w1+w2)*sin(th[i])
-        dth = (r*dt/(2.0*l))*(w1-w2)
-        x[i+1] = x[i] + dx
-        y[i+1] = y[i] + dy
-        th[i+1] = th[i] + dth
-        i = i+1
-        end
-    end
 
 A simple modification can take a sequence of points and navigate the
 robot along the path of points. Place the goal points into an array. Set
@@ -680,6 +680,7 @@ signed angle between vectors. Using the cross product:
            theta = sign*math.acos(dot/(n1*n2))
            return theta
     end
+
     Returning to the control problem we have:
 
 .. math::
