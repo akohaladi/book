@@ -239,27 +239,6 @@ While (:math:`t > t_0`)
        + (sqrt((x-9863)**2 + (y-218)**2) - 8938)**2
        return E
 
-
-.. code-block:: julia
-  
-  
-  
-   # The function definition
-    function funct(x,y)
-
-       E = (sqrt(x^2 + y^2) - 6838)^2  +
-
-       (sqrt((x-56)^2 + (y-9752)^2) - 4779)^2  +
-
-       (sqrt((x-9126)^2  + (y-7797)^2) - 6245)^2 +
-
-       (sqrt((x-9863)^2 + (y-218)^2) - 8938)^2
-
-       return E
-
-    end 
-
-
 ::
 
     # The numerical gradient approximation
@@ -306,6 +285,76 @@ While (:math:`t > t_0`)
         x,y = a,b
 
     print x, y
+
+
+
+.. code-block:: julia
+        # The function definition
+    function funct(x,y)
+
+       E = (sqrt(x^2 + y^2) - 6838)^2  +
+
+       (sqrt((x-56)^2 + (y-9752)^2) - 4779)^2  +
+
+       (sqrt((x-9126)^2  + (y-7797)^2) - 6245)^2 +
+
+       (sqrt((x-9863)^2 + (y-218)^2) - 8938)^2
+
+       return E
+
+    end
+
+
+    # The numerical gradient approximation
+    function grad(x,y)
+        delta = 0.0001
+        E = funct(x,y)
+        E1 = funct(x+delta,y)
+        E2 = funct(x,y+delta)
+        dEx = (E1-E)/delta
+        dEy = (E2-E)/delta
+        return dEx, dEy
+    end
+
+
+    # The size of the vector
+    function norm(r,s)
+        return sqrt(r*r+s*s)
+    end
+
+    # The step in the direction (u,v)
+    function step(x,y, u,v,t)
+        a = x - t*u
+        b = y - t*v
+        return a, b
+    end
+    
+    
+
+    # Globals
+    x = 5000
+    y = 5000
+    t = 10.0
+    tsmall = 0.00001
+
+    # The descent algorithm
+    while (t > tsmall)
+        dx, dy = grad(x,y)
+        size = norm(dx,dy)
+        u = dx/size
+        v = dy/size
+        a,b = step(x,y,u,v,t)
+        while (funct(a,b) > funct(x,y))
+            t = 0.5*t
+            a,b = step(x,y,u,v,t)
+        end
+    
+        x,y = a,b
+    end
+
+    println("x: ", x, " y: ", y)
+
+
 
 .. figure:: SensorsFigures/graddescent.*
    :width: 50%
