@@ -305,6 +305,7 @@ While (:math:`t > t_0`)
 
     end
 
+.. code-block:: julia
 
     # The numerical gradient approximation
     function grad(x,y)
@@ -317,6 +318,7 @@ While (:math:`t > t_0`)
         return dEx, dEy
     end
 
+.. code-block:: julia
 
     # The size of the vector
     function norm(r,s)
@@ -331,6 +333,7 @@ While (:math:`t > t_0`)
     end
     
     
+.. code-block:: julia
 
     # Globals
     x = 5000
