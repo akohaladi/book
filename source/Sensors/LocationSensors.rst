@@ -289,7 +289,8 @@ While (:math:`t > t_0`)
 
 
 .. code-block:: julia
-        # The function definition
+
+    # The function definition
     function funct(x,y)
 
        E = (sqrt(x^2 + y^2) - 6838)^2  +
