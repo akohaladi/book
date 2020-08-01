@@ -660,27 +660,27 @@ signed angle between vectors. Using the cross product:
 
 
 
-using PyCall
-math = pyimport("math")
+    using PyCall
+    math = pyimport("math")
 
-function angle(u1, u2, v1, v2)
-       n1 = math.sqrt(u1*u1+u2*u2)
-       n2 = math.sqrt(v1*v1+v2*v2)
-       dot = u1*v1+u2*v2
-       cross = u1*v2 - v1*u2
-       if cross == 0.0
-        return 0.0
-       end
-       if cross > 0
-        sign = 1
-        end
-       if cross < 0
-        sign =-1
-       end
-       theta = sign*math.acos(dot/(n1*n2))
-       return theta
-end
-Returning to the control problem we have:
+    function angle(u1, u2, v1, v2)
+           n1 = math.sqrt(u1*u1+u2*u2)
+           n2 = math.sqrt(v1*v1+v2*v2)
+           dot = u1*v1+u2*v2
+           cross = u1*v2 - v1*u2
+           if cross == 0.0
+            return 0.0
+           end
+           if cross > 0
+            sign = 1
+            end
+           if cross < 0
+            sign =-1
+           end
+           theta = sign*math.acos(dot/(n1*n2))
+           return theta
+    end
+    Returning to the control problem we have:
 
 .. math::
 
