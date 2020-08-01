@@ -239,6 +239,27 @@ While (:math:`t > t_0`)
        + (sqrt((x-9863)**2 + (y-218)**2) - 8938)**2
        return E
 
+
+.. code-block:: julia
+  
+  
+  
+   # The function definition
+    function funct(x,y)
+
+       E = (sqrt(x^2 + y^2) - 6838)^2  +
+
+       (sqrt((x-56)^2 + (y-9752)^2) - 4779)^2  +
+
+       (sqrt((x-9126)^2  + (y-7797)^2) - 6245)^2 +
+
+       (sqrt((x-9863)^2 + (y-218)^2) - 8938)^2
+
+       return E
+
+    end 
+
+
 ::
 
     # The numerical gradient approximation
