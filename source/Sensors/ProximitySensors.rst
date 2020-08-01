@@ -385,6 +385,16 @@ simple Python program to check. Step up the values:
     ...   m = 5.0*(n-1)/12.0
     ...   print "n = ", n, "  m = ", m
     ...
+  
+  
+  
+.. code-block:: julia
+
+     for n = 0:19
+          m = 5.0*(n-1)/12.0
+          println( "n = ", n, "  m = ", m)
+     end
+     
 
 The output becomes
 
